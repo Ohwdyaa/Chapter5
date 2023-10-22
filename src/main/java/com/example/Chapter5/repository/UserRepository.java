@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(nativeQuery = true, value = "select * from siswa")
+    @Query(nativeQuery = true, value = "select * from users where user_id = ?1")
     List<User> getUserById(Long userId);
 
     User save(User users);
