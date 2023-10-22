@@ -2,7 +2,6 @@ package com.example.Chapter5.service.implementasi;
 
 import com.example.Chapter5.model.Product;
 import com.example.Chapter5.repository.ProductRepository;
-import com.example.Chapter5.repository.UserRepository;
 import com.example.Chapter5.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -28,17 +28,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        return null;
+    public boolean updateProduct(Product product) {
+        return productRepository.findById(product.getProductCode())
+                .map(productRepository::save)
+                .isPresent();
     }
 
     @Override
-    public void deleteProduct(String id) {
-
+    public boolean deleteProduct(Long productCode) {
+        productRepository.deleteById(productCode);
+        return true;
     }
 
     @Override
     public List<Product> getAvailableProducts() {
-        return null;
+        // Menggunakan Java Stream untuk mengambil produk yang tersedia
+        return productRepository.findAll().stream()
+                .filter(product -> product.getAvailable()) // Misalnya, Anda dapat menggunakan metode isActive() untuk mengecek status
+                .collect(Collectors  .toList());
     }
 }

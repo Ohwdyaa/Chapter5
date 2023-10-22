@@ -11,10 +11,10 @@ public interface ProductService {
     public boolean addProduct(Product product);
 
     // Metode untuk mengupdate detail product
-    public Product updateProduct(Product product);
+    public boolean updateProduct(Product product);
 
     // Metode untuk menghapus product
-    public void deleteProduct(String id);
+    public boolean deleteProduct(Long productCode);
 
     // Metode untuk menampilkan product yang tersedia
     public List<Product> getAvailableProducts();
