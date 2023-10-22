@@ -65,21 +65,34 @@ public class ProductServiceTest {
 
     @Test
     public void testGetAvailableProducts() {
-        // Membuat daftar produk untuk pengujian
-        List<Product> products = new ArrayList<>();
-        products.add(Product.builder().productCode(2L).name("Product 1").available(true).build());
-        products.add(Product.builder().productCode(3L).name("Product 2").available(false).build());
-        products.add(Product.builder().productCode(4L).name("Product 3").available(true).build());
+        // Membuat objek produk dengan builder
+        Product product1 = Product.builder()
+                .name("Nasi Goreng")
+                .price(15000)
+                .available(true)
+                .build();
+
+        Product product2 = Product.builder()
+                .name("Mie Goreng")
+                .price(13000)
+                .available(false)
+                .build();
+
+        Product product3 = Product.builder()
+                .name("Soto")
+                .price(20000)
+                .available(true)
+                .build();
+
+        // Menyimpan produk ke basis data
+        productRepository.save(product1);
+        productRepository.save(product2);
+        productRepository.save(product3);
 
         // Memanggil metode yang akan diuji
         List<Product> availableProducts = productService.getAvailableProducts();
 
-        // Menggunakan Java Stream untuk menyaring produk yang tersedia
-        List<Product> expectedProducts = products.stream()
-                .filter(Product::getAvailable) // Menggunakan metode isAvailable() untuk mengecek status
-                .collect(Collectors.toList());
-
-        // Memeriksa apakah daftar produk yang dikembalikan sesuai dengan yang diharapkan
-        assertEquals(expectedProducts, availableProducts);
+        // Mengharapkan hasil yang sesuai dengan produk yang tersedia
+        assertEquals(2, availableProducts.size()); // Anda dapat menyesuaikan dengan jumlah produk yang diharapkan.
     }
 }

@@ -11,13 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-//    @Query(nativeQuery = true, value = "select * from product where product_code = ?1")
-//    List<User> getProductById(Long productCode);
+
     Product save(Product product);
     void deleteById(Long productCode);
 
-//    List<Product> getProductCode(Long productCode);
-//
-//    @Query(nativeQuery = true, value = "select * from product where available = true")
-//    List<Product> getAvailableProducts();
+    @Query("SELECT p FROM Product p WHERE p.available = true")
+    List<Product> findAvailableProducts();
 }

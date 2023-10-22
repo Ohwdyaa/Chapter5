@@ -42,9 +42,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAvailableProducts() {
-        // Menggunakan Java Stream untuk mengambil produk yang tersedia
-        return productRepository.findAll().stream()
-                .filter(product -> product.getAvailable()) // Misalnya, Anda dapat menggunakan metode isActive() untuk mengecek status
-                .collect(Collectors  .toList());
+        return productRepository.findAvailableProducts();
     }
 }
